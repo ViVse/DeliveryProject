@@ -1,4 +1,4 @@
-﻿namespace ADO_Dapper.Entities
+﻿namespace DAL.Entities
 {
     public class Review: BaseEntity
     {
