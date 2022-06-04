@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +31,8 @@ builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddTransient<IAddressRepository, AddressRepository>();
 builder.Services.AddTransient<IShopRepository, ShopRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IDeliveryManRepository, DeliveryManRepository>();
+builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
@@ -37,6 +41,14 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IShopService, ShopService>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
+
+builder.Services.AddScoped(s => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IDbTransaction>(s =>
+{
+    SqlConnection connection = s.GetRequiredService<SqlConnection>();
+    connection.Open();
+    return connection.BeginTransaction();
+});
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
