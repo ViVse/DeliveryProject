@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADO_Dapper", "ADO_Dapper\ADO_Dapper.csproj", "{7008D093-5A99-4E4E-BE84-8712DA6FBBC7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EF", "EF", "{DEF47DEA-7048-446C-9929-D28FB3C9C597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{F11CF52E-1EDD-45C3-BD34-5F122775BBC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "WebAPI\WebAPI.csproj", "{F11CF52E-1EDD-45C3-BD34-5F122775BBC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{A72A92A2-CE58-490C-9543-367736B4B4B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{A72A92A2-CE58-490C-9543-367736B4B4B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{258DBC19-B8FF-4D5B-AB00-7B3679B94FDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{258DBC19-B8FF-4D5B-AB00-7B3679B94FDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7008D093-5A99-4E4E-BE84-8712DA6FBBC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7008D093-5A99-4E4E-BE84-8712DA6FBBC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7008D093-5A99-4E4E-BE84-8712DA6FBBC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7008D093-5A99-4E4E-BE84-8712DA6FBBC7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F11CF52E-1EDD-45C3-BD34-5F122775BBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F11CF52E-1EDD-45C3-BD34-5F122775BBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F11CF52E-1EDD-45C3-BD34-5F122775BBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU

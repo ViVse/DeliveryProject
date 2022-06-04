@@ -2,6 +2,7 @@
 using DAL.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace DAL
 {
@@ -22,6 +23,18 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ReviewConfiguration());
             modelBuilder.ApplyConfiguration(new DeliveryManConfiguration());
+
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            IConfiguration config = new ConfigurationBuilder()
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../WebAPI"))
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("WebAPI"));
         }
 
         public Context(DbContextOptions<Context> options): base(options) { }
