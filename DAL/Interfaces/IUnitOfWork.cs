@@ -12,7 +12,7 @@ namespace DAL.Interfaces
         IProductRepository ProductRepository { get; }
         IShopRepository ShopRepository { get; }
         IReviewRepository ReviewRepository { get; }
-        IDeliveryManRepository ReliveryManRepository { get; }
+        IDeliveryManRepository DeliveryManRepository { get; }
 
         Task Commit();
         Task Dispose();
