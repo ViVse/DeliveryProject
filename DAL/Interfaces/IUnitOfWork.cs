@@ -6,11 +6,13 @@ namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        public UserManager<User> UserManager { get; }
-        public SignInManager<User> SignInManager { get; }
+        UserManager<User> UserManager { get; }
+        SignInManager<User> SignInManager { get; }
         IAddressRepository AddressRepository { get; }
         IProductRepository ProductRepository { get; }
         IShopRepository ShopRepository { get; }
+        IReviewRepository ReviewRepository { get; }
+        IDeliveryManRepository ReliveryManRepository { get; }
 
         Task Commit();
         Task Dispose();
