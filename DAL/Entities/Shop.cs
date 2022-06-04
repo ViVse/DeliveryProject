@@ -8,5 +8,6 @@
         public int AddressId { get; set; }
         public Address Address { get; set; }
         public List<Product> Products { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }
