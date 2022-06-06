@@ -10,13 +10,11 @@ namespace DAL.Data.Repositories
     {
         protected string connectionString;
         protected IDbTransaction _dbTransaction;
-        private readonly string _tableName;
 
         public DeliveryManRepository(Context context): base(context)
         {
             connectionString = context.Database.GetDbConnection().ConnectionString;
             _dbTransaction = (IDbTransaction)context.Database.CurrentTransaction;
-            _tableName = "DeliveryMen";
         }
 
         private DeliveryMan MapToDeliveryMan(SqlDataReader reader)
