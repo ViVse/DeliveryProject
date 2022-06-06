@@ -21,7 +21,7 @@ namespace BLL.Services
         public async Task DeleteAsync(int id)
         {
             await unitOfWork.ReviewRepository.DeleteAsync(id);
-            unitOfWork.Commit();
+            await unitOfWork.Commit();
         }
 
         public async Task<IEnumerable<ReviewResponse>> GetAsync()
@@ -40,14 +40,14 @@ namespace BLL.Services
         {
             var review = mapper.Map<ReviewRequest, Review>(request);
             await unitOfWork.ReviewRepository.InsertAsync(review);
-            unitOfWork.Commit();
+            await unitOfWork.Commit();
         }
 
         public async Task UpdateAsync(ReviewRequest request)
         {
             var review = mapper.Map<ReviewRequest, Review>(request);
             await unitOfWork.ReviewRepository.UpdateAsync(review);
-            unitOfWork.Commit();
+            await unitOfWork.Commit();
         }
     }
 }
