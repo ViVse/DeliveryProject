@@ -30,7 +30,7 @@ namespace DAL.Data.Repositories
             };
         }
 
-        public async Task<IEnumerable<DeliveryMan>> GetAsync()
+        public override async Task<IEnumerable<DeliveryMan>> GetAsync()
         {
             using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
@@ -53,7 +53,7 @@ namespace DAL.Data.Repositories
             }
         }
 
-        public async Task<DeliveryMan> GetByIdAsync(int id)
+        public override async Task<DeliveryMan> GetByIdAsync(int id)
         {
             using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
@@ -77,7 +77,7 @@ namespace DAL.Data.Repositories
             }
         }
 
-        public async Task InsertAsync(DeliveryMan deliveryMan)
+        public override async Task InsertAsync(DeliveryMan deliveryMan)
         {
             using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
@@ -95,7 +95,7 @@ namespace DAL.Data.Repositories
             }
         }
 
-        public async Task DeleteAsync(int id)
+        public override async Task DeleteAsync(int id)
         {
             using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
@@ -110,7 +110,7 @@ namespace DAL.Data.Repositories
             }
         }
 
-        public async Task UpdateAsync(DeliveryMan deliveryMan)
+        public override async Task UpdateAsync(DeliveryMan deliveryMan)
         {
             using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
