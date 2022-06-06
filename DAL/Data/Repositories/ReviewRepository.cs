@@ -22,13 +22,13 @@ namespace DAL.Data.Repositories
             _tableName = "Review";
         }
 
-        public async Task<IEnumerable<Review>> GetAll()
+        public async Task<IEnumerable<Review>> GetAllAsync()
         {
             return await _sqlConnection.QueryAsync<Review>($"Select * FROM {_tableName}",
                 transaction: _dbTransaction);
         }
 
-        public async Task<Review> GetById(int id)
+        public async Task<Review> GetByIdAsync(int id)
         {
             var result = await _sqlConnection.QuerySingleOrDefaultAsync<Review>($"SELECT * FROM {_tableName} WHERE Id=@Id",
                 param: new { Id = id },
@@ -38,20 +38,20 @@ namespace DAL.Data.Repositories
             return result;
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             await _sqlConnection.ExecuteAsync($"DELETE FROM {_tableName} WHERE Id=@Id",
                 param: new { Id = id },
                 transaction: _dbTransaction);
         }
 
-        public async Task Insert(Review t)
+        public async Task InsertAsync(Review t)
         {
             var query = GenerateInsertQuery();
             await _sqlConnection.ExecuteAsync(query, param: t, transaction: _dbTransaction);
         }
 
-        public async Task Update(Review t)
+        public async Task UpdateAsync(Review t)
         {
             var query = GenerateUpdateQuery();
             await _sqlConnection.ExecuteAsync(query, param: t, transaction: _dbTransaction);
