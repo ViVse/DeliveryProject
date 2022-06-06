@@ -39,6 +39,8 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<IAddressService, AddressService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IShopService, ShopService>();
+builder.Services.AddTransient<IReviewService, ReviewService>(); 
+builder.Services.AddTransient<IDeliveryManService, DeliveryManService>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 
