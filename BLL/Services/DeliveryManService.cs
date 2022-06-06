@@ -26,7 +26,7 @@ namespace BLL.Services
 
         public async Task<IEnumerable<DeliveryManResponse>> GetAsync()
         {
-            var deliveryMen = await unitOfWork.DeliveryManRepository.GetAllAsync();
+            var deliveryMen = await unitOfWork.DeliveryManRepository.GetAsync();
             return deliveryMen?.Select(mapper.Map<DeliveryMan, DeliveryManResponse>);
         }
 

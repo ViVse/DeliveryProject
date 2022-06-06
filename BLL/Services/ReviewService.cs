@@ -26,7 +26,7 @@ namespace BLL.Services
 
         public async Task<IEnumerable<ReviewResponse>> GetAsync()
         {
-            var reviews = await unitOfWork.ReviewRepository.GetAllAsync();
+            var reviews = await unitOfWork.ReviewRepository.GetAsync();
             return reviews?.Select(mapper.Map<Review, ReviewResponse>);
         }
 

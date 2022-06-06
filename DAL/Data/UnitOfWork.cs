@@ -9,8 +9,8 @@ namespace DAL.Data
 {
     public class UnitOfWork: IUnitOfWork
     {
-        SqlConnection _sqlConnection;
-        IDbTransaction _dbTransaction;
+        /*SqlConnection _sqlConnection;
+        IDbTransaction _dbTransaction;*/
         protected readonly Context _context;
         public UserManager<User> UserManager { get; }
         public SignInManager<User> SignInManager { get; }
@@ -21,8 +21,8 @@ namespace DAL.Data
         public IDeliveryManRepository DeliveryManRepository { get; }
 
         public UnitOfWork(
-            SqlConnection sqlConnection,
-            IDbTransaction dbTransaction,
+            /*SqlConnection sqlConnection,
+            IDbTransaction dbTransaction,*/
             Context context, 
             UserManager<User> userManager, 
             SignInManager<User> signInManager,
@@ -32,8 +32,8 @@ namespace DAL.Data
             IReviewRepository reviewRepository,
             IDeliveryManRepository deliveryManRepository)
         {
-            _sqlConnection = sqlConnection;
-            _dbTransaction = dbTransaction;
+           /* _sqlConnection = sqlConnection;
+            _dbTransaction = dbTransaction;*/
             _context = context;
             UserManager = userManager;
             SignInManager = signInManager;
@@ -47,22 +47,22 @@ namespace DAL.Data
         public async Task Commit()
         {
             await _context.SaveChangesAsync();
-            try
+/*            try
             {
                _dbTransaction.Commit();
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 _dbTransaction.Rollback();
-            }
+            }*/
         }
 
         public async Task Dispose()
         {
             await _context.DisposeAsync();
-            _dbTransaction.Connection?.Close();
+            /*_dbTransaction.Connection?.Close();
             _dbTransaction.Connection?.Dispose();
-            _dbTransaction.Dispose();
+            _dbTransaction.Dispose();*/
         }
     }
 }

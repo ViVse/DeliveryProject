@@ -44,13 +44,13 @@ builder.Services.AddTransient<IDeliveryManService, DeliveryManService>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
 
-builder.Services.AddScoped(s => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
+/*builder.Services.AddScoped(s => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IDbTransaction>(s =>
 {
     SqlConnection connection = s.GetRequiredService<SqlConnection>();
     connection.Open();
     return connection.BeginTransaction();
-});
+});*/
 
 var mapperConfig = new MapperConfiguration(mc =>
 {

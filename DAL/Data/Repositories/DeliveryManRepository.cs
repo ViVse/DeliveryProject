@@ -1,20 +1,21 @@
 ﻿using DAL.Entities;
 using DAL.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace DAL.Data.Repositories
 {
-    public class DeliveryManRepository : IDeliveryManRepository
+    public class DeliveryManRepository : GenericRepository<DeliveryMan>, IDeliveryManRepository
     {
-        protected SqlConnection _sqlConnection;
+        protected string connectionString;
         protected IDbTransaction _dbTransaction;
         private readonly string _tableName;
 
-        public DeliveryManRepository(SqlConnection sqlConnection, IDbTransaction dbTransaction)
+        public DeliveryManRepository(Context context): base(context)
         {
-            _sqlConnection = sqlConnection;
-            _dbTransaction = dbTransaction;
+            connectionString = context.Database.GetDbConnection().ConnectionString;
+            _dbTransaction = (IDbTransaction)context.Database.CurrentTransaction;
             _tableName = "DeliveryMen";
         }
 
@@ -29,9 +30,9 @@ namespace DAL.Data.Repositories
             };
         }
 
-        public async Task<IEnumerable<DeliveryMan>> GetAllAsync()
+        public async Task<IEnumerable<DeliveryMan>> GetAsync()
         {
-            using (_sqlConnection)
+            using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetAllDeliveryMen", _sqlConnection, (SqlTransaction)_dbTransaction))
                 {
@@ -54,7 +55,7 @@ namespace DAL.Data.Repositories
 
         public async Task<DeliveryMan> GetByIdAsync(int id)
         {
-            using (_sqlConnection)
+            using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("GetDeliveryMan", _sqlConnection, (SqlTransaction)_dbTransaction))
                 {
@@ -78,7 +79,7 @@ namespace DAL.Data.Repositories
 
         public async Task InsertAsync(DeliveryMan deliveryMan)
         {
-            using (_sqlConnection)
+            using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("AddDeliveryMan", _sqlConnection, (SqlTransaction)_dbTransaction))
                 {
@@ -96,7 +97,7 @@ namespace DAL.Data.Repositories
 
         public async Task DeleteAsync(int id)
         {
-            using (_sqlConnection)
+            using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("DeleteDeliveryMan", _sqlConnection, (SqlTransaction)_dbTransaction))
                 {
@@ -111,9 +112,9 @@ namespace DAL.Data.Repositories
 
         public async Task UpdateAsync(DeliveryMan deliveryMan)
         {
-            using (_sqlConnection)
+            using (SqlConnection _sqlConnection = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("UpdateShop", _sqlConnection, (SqlTransaction)_dbTransaction))
+                using (SqlCommand cmd = new SqlCommand("UpdateDeliveryMan", _sqlConnection, (SqlTransaction)_dbTransaction))
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.Clear();

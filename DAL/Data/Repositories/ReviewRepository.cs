@@ -6,23 +6,24 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Data.Repositories
 {
-    public class ReviewRepository: IReviewRepository
+    public class ReviewRepository: GenericRepository<Review>, IReviewRepository
     {
         protected SqlConnection _sqlConnection;
         protected IDbTransaction _dbTransaction;
         private readonly string _tableName;
 
-        public ReviewRepository(SqlConnection sqlConnection, IDbTransaction dbTransaction)
+        public ReviewRepository(Context context): base(context)
         {
-            _sqlConnection = sqlConnection;
-            _dbTransaction = dbTransaction;
+            _sqlConnection = new SqlConnection(context.Database.GetDbConnection().ConnectionString);
+            _dbTransaction = (IDbTransaction)context.Database.CurrentTransaction;
             _tableName = "Review";
         }
 
-        public async Task<IEnumerable<Review>> GetAllAsync()
+        public async Task<IEnumerable<Review>> GetAsync()
         {
             return await _sqlConnection.QueryAsync<Review>($"Select * FROM {_tableName}",
                 transaction: _dbTransaction);
@@ -73,6 +74,8 @@ namespace DAL.Data.Repositories
         {
             var updateQuery = new StringBuilder($"UPDATE {_tableName} SET ");
             var properties = GenerateListOfProperties(GetProperties);
+            properties.Remove("Customer");
+            properties.Remove("Shop");
             properties.ForEach(p =>
             {
                 if (!p.Equals("Id"))
@@ -90,6 +93,8 @@ namespace DAL.Data.Repositories
             var properties = GenerateListOfProperties(GetProperties);
             //If Id is autoincremented
             properties.Remove("Id");
+            properties.Remove("Customer");
+            properties.Remove("Shop");
 
             properties.ForEach((p) => insertQuery.Append($"[{p}],"));
             insertQuery.Remove(insertQuery.Length - 1, 1).Append(") VALUES (");

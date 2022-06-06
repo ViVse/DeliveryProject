@@ -2,12 +2,7 @@
 
 namespace DAL.Interfaces.Repositories
 {
-    public interface IDeliveryManRepository
+    public interface IDeliveryManRepository: IRepository<DeliveryMan>
     {
-        Task<IEnumerable<DeliveryMan>> GetAllAsync();
-        Task DeleteAsync(int id);
-        Task<DeliveryMan> GetByIdAsync(int id);
-        Task InsertAsync(DeliveryMan t);
-        Task UpdateAsync(DeliveryMan t);
     }
 }
