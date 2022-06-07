@@ -5,11 +5,11 @@ using System.Reflection;
 
 namespace Application.Common.Behaviours
 {
-    public class AuthoirizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse>
+    public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse>
     {
         private readonly ICurrentUserService _currentUserService;
 
-        public AuthoirizationBehaviour(ICurrentUserService currentUserService)
+        public AuthorizationBehaviour(ICurrentUserService currentUserService)
         {
             _currentUserService = currentUserService;
         }
