@@ -9,7 +9,7 @@ namespace Domain.Entities
         public float TotalPrice { get; set; }
         public DateTime Date { get; set; }
         public DeliveryMan DeliveryMan { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatusEnum OrderStatus { get; set; }
         public Address Address { get; set; }
         public List<Product> Products { get; set; }
     }
