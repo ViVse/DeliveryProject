@@ -15,11 +15,11 @@ namespace Application.Orders.Queries
 
     public class GetOrdersWithPaginationQueryHandler: IRequestHandler<GetOrdersWithPaginationQuery, PaginatedList<Order>>
     {
-        private readonly IMongoCollection<Order> collection;
+        private readonly IMongoDbContext _context;
 
         public GetOrdersWithPaginationQueryHandler(IMongoDbContext context)
         {
-            var collection = context.ConnectToMongo<Order>("Orders");
+            _context = context;
         }
 
         public async Task<PaginatedList<Order>> Handle(GetOrdersWithPaginationQuery request, CancellationToken cancellationToken)
@@ -34,12 +34,13 @@ namespace Application.Orders.Queries
             var dataFacet = AggregateFacet.Create("dataFacet",
                 PipelineDefinition<Order, Order>.Create(new[]
                 {
-                PipelineStageDefinitionBuilder.Sort(Builders<Order>.Sort.Ascending(x => x.Id)),
+                PipelineStageDefinitionBuilder.Sort(Builders<Order>.Sort.Ascending(x => x.Date)),
                 PipelineStageDefinitionBuilder.Skip<Order>((request.PageNumber - 1) * request.PageSize),
                 PipelineStageDefinitionBuilder.Limit<Order>(request.PageSize),
                 }));
 
-            var filter = Builders<Order>.Filter.Eq("Customer.Id", request.CustomerId);
+            var filter = Builders<Order>.Filter.Eq("Customer._id", request.CustomerId);
+            var collection = _context.ConnectToMongo<Order>("orders");
             var aggregation = await collection.Aggregate()
                 .Match(filter)
                 .Facet(countFacet, dataFacet)

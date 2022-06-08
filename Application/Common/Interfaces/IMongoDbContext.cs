@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Domain.Common;
+using MongoDB.Driver;
 
 namespace Application.Common.Interfaces
 {
@@ -6,6 +7,6 @@ namespace Application.Common.Interfaces
     {
         public IMongoCollection<T> ConnectToMongo<T>(in string collection);
 
-        Task<string> SaveChangesAsync(CancellationToken cancellationToken);
+        public Task PublishEvents(IEnumerable<BaseEvent> events);
     }
 }

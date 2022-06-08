@@ -1,3 +1,5 @@
+using Application.Common.Interfaces;
+using Application.Orders.Commands.CreateOrder;
 using AutoMapper;
 using BLL.Configurations;
 using BLL.Factories;
@@ -10,13 +12,14 @@ using DAL.Data.Repositories;
 using DAL.Entities;
 using DAL.Interfaces;
 using DAL.Interfaces.Repositories;
+using Infrastructure.Persistence;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Data;
-using System.Data.SqlClient;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,14 +46,6 @@ builder.Services.AddTransient<IReviewService, ReviewService>();
 builder.Services.AddTransient<IDeliveryManService, DeliveryManService>();
 builder.Services.AddTransient<IIdentityService, IdentityService>();
 builder.Services.AddTransient<IUsersService, UsersService>();
-
-/*builder.Services.AddScoped(s => new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<IDbTransaction>(s =>
-{
-    SqlConnection connection = s.GetRequiredService<SqlConnection>();
-    connection.Open();
-    return connection.BeginTransaction();
-});*/
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
@@ -95,6 +90,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             }
         };
     });
+
+//Clean
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(CreateOrderCommand).GetTypeInfo().Assembly);
+//builder.Services.AddApplicationServices();
+
+builder.Services.AddScoped<IMongoDbContext>(s =>
+{
+    var mediator = s.GetRequiredService<IMediator>();
+    var connectionString = builder.Configuration.GetConnectionString("mongoDb");
+    return new MongoDbContext(mediator, connectionString, builder.Configuration["MongoDbName"]);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

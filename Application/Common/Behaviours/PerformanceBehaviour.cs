@@ -9,13 +9,11 @@ namespace Application.Common.Behaviours
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
-        private readonly ICurrentUserService _currentUserService;
 
-        public PerformanceBehaviour(ILogger<TRequest> logger, ICurrentUserService currentUserService)
+        public PerformanceBehaviour(ILogger<TRequest> logger)
         {
             _timer = new Stopwatch();
             _logger = logger;
-            _currentUserService = currentUserService;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -31,10 +29,9 @@ namespace Application.Common.Behaviours
             if(elapsedMilliseconds > 500)
             {
                 var requestName = typeof(TRequest).Name;
-                var userId = _currentUserService.UserId ?? String.Empty;
 
-                _logger.LogWarning("CleanArchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@UserId} {@Request}",
-                    requestName, elapsedMilliseconds, userId, request);
+                _logger.LogWarning("CleanArchitecture Long Running Request: {Name} ({ElapsedMilliseconds} milliseconds) {@Request}",
+                    requestName, elapsedMilliseconds, request);
             }
 
             return response;

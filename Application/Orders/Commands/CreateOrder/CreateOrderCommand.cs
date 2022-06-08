@@ -3,7 +3,6 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Events;
 using MediatR;
-using MongoDB.Driver;
 
 namespace Application.Orders.Commands.CreateOrder
 {
@@ -19,11 +18,11 @@ namespace Application.Orders.Commands.CreateOrder
 
     public class CreateOrderCommandHandler: IRequestHandler<CreateOrderCommand, string>
     {
-        private readonly IMongoCollection<Order> collection;
+        private readonly IMongoDbContext _context;
 
         public CreateOrderCommandHandler(IMongoDbContext context)
         {
-            var collection = context.ConnectToMongo<Order>("Orders");
+            _context = context;
         }
 
         public async Task<string> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -42,7 +41,8 @@ namespace Application.Orders.Commands.CreateOrder
             entity.AddDomainEvent(new OrderCreatedEvent(entity));
 
 
-            await collection.InsertOneAsync(entity, cancellationToken);
+            await _context.ConnectToMongo<Order>("orders").InsertOneAsync(entity, cancellationToken);
+            await _context.PublishEvents(entity.DomainEvents);
 
             return entity.Id;
         }
