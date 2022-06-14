@@ -12,6 +12,7 @@ namespace DAL.Data.Repositories
         public async Task<PagedList<Product>> GetAsync(ProductParameters parameters)
         {
             var products = FindByCondition(o => 
+                                            (parameters.ShopId == null || parameters.ShopId == o.ShopId) &&
                                             o.Price >= parameters.MinPrice &&
                                             (o.Price <= parameters.MaxPrice || parameters.MaxPrice == null) &&
                                             o.ProductionTime >= parameters.MinProductionTime &&

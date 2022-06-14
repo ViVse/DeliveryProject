@@ -23,7 +23,7 @@ namespace Delivery_Entity.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<PagedList<ShopResponse>>> GetPagedAsync([FromQuery] ShopParameters parameters)

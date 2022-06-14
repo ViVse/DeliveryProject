@@ -10,6 +10,8 @@
 
         public string Name { get; set; } = "";
 
+        public int? ShopId { get; set; }
+
         public bool ValidPriceRange => MaxPrice == null || MinPrice <= MaxPrice;
         public bool ValidProductionTimeRange => MaxProductionTime == null || MinProductionTime <= MaxProductionTime;
     }

@@ -31,11 +31,12 @@ namespace BLL.Services
             return mapper.Map<Address, AddressResponse>(address);
         }
 
-        public async Task InsertAsync(AddressRequest request)
+        public async Task<int> InsertAsync(AddressRequest request)
         {
             var address = mapper.Map<AddressRequest, Address>(request);
-            await unitOfWork.AddressRepository.InsertAsync(address);
+            int id = await unitOfWork.AddressRepository.InsertAsync(address);
             await unitOfWork.Commit();
+            return id;
         }
 
         public async Task UpdateAsync(AddressRequest request)

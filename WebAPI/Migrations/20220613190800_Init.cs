@@ -61,8 +61,8 @@ namespace WebAPI.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DefaultAddressId = table.Column<int>(type: "int", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AddressId = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -82,11 +82,10 @@ namespace WebAPI.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Address_DefaultAddressId",
-                        column: x => x.DefaultAddressId,
+                        name: "FK_AspNetUsers_Address_AddressId",
+                        column: x => x.AddressId,
                         principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -96,8 +95,8 @@ namespace WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -224,8 +223,8 @@ namespace WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<float>(type: "real", nullable: false),
                     ProductionTime = table.Column<int>(type: "int", nullable: false),
                     ShopId = table.Column<int>(type: "int", nullable: false)
@@ -249,7 +248,7 @@ namespace WebAPI.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Stars = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShopId = table.Column<int>(type: "int", nullable: false),
@@ -283,21 +282,21 @@ namespace WebAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "AddressId", "Avatar", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "3b333929-f974-444e-a8d3-68f50a0456g1", 0, null, "", "1dfe2ef2-f51e-4637-a29d-b1f477b44a36", "new@gmail.com", false, "Vova", "Vasenko", false, null, null, null, "AQAAAAEAACcQAAAAEEWKu609LKbil0EuG/Nyy6DzGZqzQx1fPbuBLj8G8LNEsEFJASAP3jzG1KON5fp2jQ==", "0950907894", false, "f15dab31-bcbe-4fc5-b855-b87e9f99ca3e", false, null },
+                    { "3b333929-f974-444e-a8d3-68f50a0459c0", 0, null, "", "3d8c850e-a23d-40e5-919b-799c22bbe645", "Test@gmail.com", false, "Ivan", "Ishchenko", false, null, null, null, "AQAAAAEAACcQAAAAEO9LQOQSDYNWXhIMHi2oag1TT4Xg3fWvaKhsFr8sEZiT6M4Ou0M3Kx54ToVP6pPUtw==", "0950907774", false, "fd625c90-0902-4c6f-878d-1d8de2c368fa", false, null }
+                });
+
+            migrationBuilder.InsertData(
                 table: "DeliveryMen",
                 columns: new[] { "Id", "FirstName", "LastName", "Phone" },
                 values: new object[,]
                 {
                     { 1, "Alex", "Bob", "0990502341" },
                     { 2, "John", "Fisher", "0950507641" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "Avatar", "ConcurrencyStamp", "DefaultAddressId", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[,]
-                {
-                    { "3b333929-f974-444e-a8d3-68f50a0456g1", 0, "", "70e6b232-7129-4986-8792-59faf43d18a4", 2, "new@gmail.com", false, "Vova", "Vasenko", false, null, null, null, "AQAAAAEAACcQAAAAEB/tMF2T71kKloBjwxrmbg0GVPoFz335nNPua+WyaIvft11Isv90PEbCjMf0tXpMWA==", "0950907894", false, "301acc7b-c52b-4341-8443-19bab51fdaa5", false, null },
-                    { "3b333929-f974-444e-a8d3-68f50a0459c0", 0, "", "f799567d-2e46-4065-845f-f6c4664a64c2", 1, "Test@gmail.com", false, "Ivan", "Ishchenko", false, null, null, null, "AQAAAAEAACcQAAAAENJwaIg8LKyr2bSMQgh2dD5QP6tko5kg0R/hiTo3PnxrebVqjCwsh3kRc217I43SFA==", "0950907774", false, "73c2434c-9154-45e9-9c38-cd8a6be24067", false, null }
                 });
 
             migrationBuilder.InsertData(
@@ -327,8 +326,8 @@ namespace WebAPI.Migrations
                 columns: new[] { "Id", "CustomerId", "Date", "ShopId", "Stars", "Text" },
                 values: new object[,]
                 {
-                    { 1, "3b333929-f974-444e-a8d3-68f50a0459c0", new DateTime(2022, 6, 5, 2, 19, 32, 108, DateTimeKind.Local).AddTicks(7576), 1, 0, "nice shop" },
-                    { 2, "3b333929-f974-444e-a8d3-68f50a0459c0", new DateTime(2022, 6, 5, 2, 19, 32, 113, DateTimeKind.Local).AddTicks(9524), 2, 0, "good service" }
+                    { 1, "3b333929-f974-444e-a8d3-68f50a0459c0", new DateTime(2022, 6, 13, 22, 7, 58, 849, DateTimeKind.Local).AddTicks(287), 1, 0, "nice shop" },
+                    { 2, "3b333929-f974-444e-a8d3-68f50a0459c0", new DateTime(2022, 6, 13, 22, 7, 58, 852, DateTimeKind.Local).AddTicks(6959), 2, 0, "good service" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -364,9 +363,9 @@ namespace WebAPI.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_DefaultAddressId",
+                name: "IX_AspNetUsers_AddressId",
                 table: "AspNetUsers",
-                column: "DefaultAddressId");
+                column: "AddressId");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",

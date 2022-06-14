@@ -13,11 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clean", "Clean", "{2C49E782-9819-4B50-BA2C-C69CD267E25F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{AAA962EF-5FCF-4B6D-B95E-890E37A21AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{AAA962EF-5FCF-4B6D-B95E-890E37A21AD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{C41F061C-1587-4476-8277-5E64864D5DA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{C41F061C-1587-4476-8277-5E64864D5DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{3F24A313-6CFD-4FD0-B61E-AB6C3C4E3FB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F24A313-6CFD-4FD0-B61E-AB6C3C4E3FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F24A313-6CFD-4FD0-B61E-AB6C3C4E3FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F24A313-6CFD-4FD0-B61E-AB6C3C4E3FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F24A313-6CFD-4FD0-B61E-AB6C3C4E3FB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@ namespace BLL.Interfaces.Services
         
         Task<AddressResponse> GetByIdAsync(int id);
         
-        Task InsertAsync(AddressRequest request);
+        Task<int> InsertAsync(AddressRequest request);
 
         Task UpdateAsync(AddressRequest request);
 

@@ -18,8 +18,6 @@ namespace DAL.Seeding
                 Email = "Test@gmail.com",
                 PhoneNumber = "0950907774",
                 Avatar = "",
-                DefaultAddressId = 1
-
             },
             "User%password1"
             ),
@@ -32,8 +30,6 @@ namespace DAL.Seeding
                 Email = "new@gmail.com",
                 PhoneNumber = "0950907894",
                 Avatar = "",
-                DefaultAddressId = 2
-
             },
             "User%password2"
             )

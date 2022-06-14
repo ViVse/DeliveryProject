@@ -12,6 +12,5 @@
 
         public string PhoneNumber { get; set; }
 
-        public int DefaultAddressId { get; set; }
     }
 }

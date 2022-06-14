@@ -1,5 +1,8 @@
 ﻿using System.Reflection;
+using Application.Orders.Queries.GetOrdersWithPagination;
 using AutoMapper;
+using Domain.Entities;
+using Domain.Enums;
 
 namespace Application.Common.Mappings;
 
@@ -7,7 +10,10 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        CreateMap<Order, OrderBriefDto>().ForMember(response => response.OrderStatus,
+                options => options.MapFrom(order => order.OrderStatus.getValue()));
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
+        
     }
 
     private void ApplyMappingsFromAssembly(Assembly assembly)

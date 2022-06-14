@@ -1,0 +1,50 @@
+﻿@page "/signin"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+@inject NavigationManager NavManager
+
+@if(isLoading) {
+    <LoadingSpinner></LoadingSpinner>
+} else
+{
+    <h3>SignIn</h3>
+
+    <EditForm Model="@signInModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+             <label for="email">Email address</label>
+            <InputText id="email" class="form-control" @bind-Value="signInModel.Email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" class="form-control" @bind-Value="signInModel.Password" />
+        </div>
+    
+        <button class="mt-1 btn btn-primary" type="submit">Submit</button>
+    </EditForm>
+}
+
+@code {
+    private SignInModel signInModel = new();
+    private bool isLoading = false;
+
+    private async Task HandleValidSubmit()
+    {
+        isLoading = true;
+        var postBody = new { Email = signInModel.Email, Password = signInModel.Password };
+        using var response = await Http.PostAsJsonAsync("Identity/signin", postBody);
+        TokenResponse tokenResponse = await response.Content.ReadFromJsonAsync<TokenResponse>();
+        await localStore.SetItemAsync("jwtToken", tokenResponse.token);
+        isLoading = false;
+        StateHasChanged();
+        NavManager.NavigateTo("/");
+
+    }
+
+    class TokenResponse
+    {
+        public string token { get; set; }
+    }
+}

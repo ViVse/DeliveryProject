@@ -19,11 +19,6 @@ namespace DAL.Configurations
                 .HasMaxLength(50)
                 .IsRequired();
 
-            builder.HasOne(u => u.DefaultAddress)
-                .WithMany(address => address.Users)
-                .HasForeignKey(u => u.DefaultAddressId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             new UserSeeder().Seed(builder);
         }
     }

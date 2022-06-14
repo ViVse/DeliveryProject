@@ -1,7 +1,7 @@
 ﻿using BLL.DTO.Requests;
 using BLL.DTO.Responses;
 using BLL.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -60,6 +60,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Post([FromBody] DeliveryManRequest newDeliveryMan)
         {
             try
@@ -86,6 +87,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Put(int id, [FromBody] DeliveryManRequest updatedDeliveryMan)
         {
             try
@@ -118,6 +120,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             try

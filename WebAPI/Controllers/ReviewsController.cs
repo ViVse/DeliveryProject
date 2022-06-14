@@ -1,6 +1,7 @@
 ﻿using BLL.DTO.Requests;
 using BLL.DTO.Responses;
 using BLL.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -59,6 +60,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Post([FromBody] ReviewRequest newReview)
         {
             try
@@ -85,6 +87,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Put(int id, [FromBody] ReviewRequest updatedReview)
         {
             try
@@ -117,6 +120,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<ActionResult> Delete(int id)
         {
             try

@@ -11,7 +11,7 @@ namespace Application.Orders.Commands.CreateOrder
         public Customer Customer { get; set; }
         public float TotalPrice { get; set; }
         public DeliveryMan DeliveryMan { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public OrderStatusEnum OrderStatus { get; set; }
         public Address Address { get; set; }
         public List<Product> Products { get; set; }
     }
@@ -39,7 +39,6 @@ namespace Application.Orders.Commands.CreateOrder
             };
 
             entity.AddDomainEvent(new OrderCreatedEvent(entity));
-
 
             await _context.ConnectToMongo<Order>("orders").InsertOneAsync(entity, cancellationToken);
             await _context.PublishEvents(entity.DomainEvents);

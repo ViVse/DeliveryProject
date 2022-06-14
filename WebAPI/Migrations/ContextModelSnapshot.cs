@@ -138,11 +138,9 @@ namespace WebAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -234,7 +232,6 @@ namespace WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -250,7 +247,7 @@ namespace WebAPI.Migrations
                         {
                             Id = 1,
                             CustomerId = "3b333929-f974-444e-a8d3-68f50a0459c0",
-                            Date = new DateTime(2022, 6, 5, 2, 19, 32, 108, DateTimeKind.Local).AddTicks(7576),
+                            Date = new DateTime(2022, 6, 13, 22, 7, 58, 849, DateTimeKind.Local).AddTicks(287),
                             ShopId = 1,
                             Stars = 0,
                             Text = "nice shop"
@@ -259,7 +256,7 @@ namespace WebAPI.Migrations
                         {
                             Id = 2,
                             CustomerId = "3b333929-f974-444e-a8d3-68f50a0459c0",
-                            Date = new DateTime(2022, 6, 5, 2, 19, 32, 113, DateTimeKind.Local).AddTicks(9524),
+                            Date = new DateTime(2022, 6, 13, 22, 7, 58, 852, DateTimeKind.Local).AddTicks(6959),
                             ShopId = 2,
                             Stars = 0,
                             Text = "good service"
@@ -278,11 +275,9 @@ namespace WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -339,16 +334,15 @@ namespace WebAPI.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Avatar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DefaultAddressId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -402,7 +396,7 @@ namespace WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DefaultAddressId");
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -420,17 +414,16 @@ namespace WebAPI.Migrations
                             Id = "3b333929-f974-444e-a8d3-68f50a0459c0",
                             AccessFailedCount = 0,
                             Avatar = "",
-                            ConcurrencyStamp = "f799567d-2e46-4065-845f-f6c4664a64c2",
-                            DefaultAddressId = 1,
+                            ConcurrencyStamp = "3d8c850e-a23d-40e5-919b-799c22bbe645",
                             Email = "Test@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ivan",
                             LastName = "Ishchenko",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAENJwaIg8LKyr2bSMQgh2dD5QP6tko5kg0R/hiTo3PnxrebVqjCwsh3kRc217I43SFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEO9LQOQSDYNWXhIMHi2oag1TT4Xg3fWvaKhsFr8sEZiT6M4Ou0M3Kx54ToVP6pPUtw==",
                             PhoneNumber = "0950907774",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "73c2434c-9154-45e9-9c38-cd8a6be24067",
+                            SecurityStamp = "fd625c90-0902-4c6f-878d-1d8de2c368fa",
                             TwoFactorEnabled = false
                         },
                         new
@@ -438,17 +431,16 @@ namespace WebAPI.Migrations
                             Id = "3b333929-f974-444e-a8d3-68f50a0456g1",
                             AccessFailedCount = 0,
                             Avatar = "",
-                            ConcurrencyStamp = "70e6b232-7129-4986-8792-59faf43d18a4",
-                            DefaultAddressId = 2,
+                            ConcurrencyStamp = "1dfe2ef2-f51e-4637-a29d-b1f477b44a36",
                             Email = "new@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Vova",
                             LastName = "Vasenko",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEB/tMF2T71kKloBjwxrmbg0GVPoFz335nNPua+WyaIvft11Isv90PEbCjMf0tXpMWA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEWKu609LKbil0EuG/Nyy6DzGZqzQx1fPbuBLj8G8LNEsEFJASAP3jzG1KON5fp2jQ==",
                             PhoneNumber = "0950907894",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "301acc7b-c52b-4341-8443-19bab51fdaa5",
+                            SecurityStamp = "f15dab31-bcbe-4fc5-b855-b87e9f99ca3e",
                             TwoFactorEnabled = false
                         });
                 });
@@ -629,13 +621,9 @@ namespace WebAPI.Migrations
 
             modelBuilder.Entity("DAL.Entities.User", b =>
                 {
-                    b.HasOne("DAL.Entities.Address", "DefaultAddress")
+                    b.HasOne("DAL.Entities.Address", null)
                         .WithMany("Users")
-                        .HasForeignKey("DefaultAddressId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DefaultAddress");
+                        .HasForeignKey("AddressId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

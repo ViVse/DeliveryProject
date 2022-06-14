@@ -1,0 +1,61 @@
+﻿@page "/signup"
+@using BLL.Services
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStore
+@inject NavigationManager NavManager
+
+@if(isLoading) {
+    <LoadingSpinner></LoadingSpinner>
+} else
+{
+    <h3>SignUp</h3>
+
+    <EditForm Model="@signUpModel" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+             <label for="email">Email address</label>
+            <InputText id="email" class="form-control" @bind-Value="signUpModel.Email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <InputText id="password" class="form-control" @bind-Value="signUpModel.Password" />
+        </div>
+        <div class="form-group">
+             <label for="firstName">First name</label>
+            <InputText id="firstName" class="form-control" @bind-Value="signUpModel.FirstName" />
+        </div>
+        <div class="form-group">
+             <label for="lastName">Last name</label>
+            <InputText id="lastName" class="form-control" @bind-Value="signUpModel.LastName" />
+        </div>
+        <div class="form-group">
+             <label for="phone">Phone number</label>
+            <InputText id="phone" class="form-control" @bind-Value="signUpModel.PhoneNumber" />
+        </div>
+    
+        <button class="mt-1 btn btn-primary" type="submit">Submit</button>
+    </EditForm>
+}
+
+@code {
+    private SignUpModel signUpModel = new();
+    private bool isLoading = false;
+
+    private async Task HandleValidSubmit()
+    {
+        isLoading = true;
+        var postBody = new { 
+            Email = signUpModel.Email, 
+            Password = signUpModel.Password, 
+            FirstName = signUpModel.FirstName, 
+            LastName = signUpModel.LastName, 
+            PhoneNumber = signUpModel.PhoneNumber
+        };
+        var response = await Http.PostAsJsonAsync("Identity/signup", postBody);
+        isLoading = false;
+        NavManager.NavigateTo("/signin");
+
+    }
+}

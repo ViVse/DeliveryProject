@@ -1,4 +1,5 @@
-﻿using DAL.Exceptions;
+﻿using DAL.Entities;
+using DAL.Exceptions;
 using DAL.Interfaces.Repositories;
 using DAL.Pagination;
 using DAL.Parameters;
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace DAL.Data.Repositories
 {
-    public class GenericRepository<TEntity>: IRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity>: IRepository<TEntity> where TEntity : BaseEntity
     {
         protected readonly Context databaseContext;
 

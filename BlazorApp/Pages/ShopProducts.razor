@@ -1,0 +1,129 @@
+﻿@page "/shops/{shopId:int}"
+@using BLL.DTO.Responses
+@using Newtonsoft.Json.Linq
+@inject HttpClient Http
+@inject NavigationManager NavManager
+@inject IJSRuntime JsRuntime
+
+@if(shop is null || products is null)
+{
+    <LoadingSpinner></LoadingSpinner>
+} else
+{
+    <h3>@shop.Name</h3>
+    <img class="img-fluid" alt="@shop.Name" src="@(
+                                        (@shop.Image is null || @shop.Image == "no image") ? 
+                                        "https://thumbs.dreamstime.com/b/%D0%B7-%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D0%B0-33822015.jpg"
+                                        : @shop.Image)"/>
+    <h5>Address: @shop.City, @shop.AddressLine</h5>
+    <p>@shop.Description</p>
+    <div class="row">
+    @foreach(var product in products)
+    {
+        <div class="col-sm-6">
+                <div class="card mb-3">
+                  <div class="card-body">
+                     <img class="card-img-top" alt="@product.Name" src="@(
+                                        (@product.Image is null || @product.Image == "no image") ? 
+                                        "https://agrii.com.ua/image/no-image.jpg"
+                                        : @product.Image)"/>
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Description</p>
+                    <p class="card-text">Production time: @product.ProductionTime</p>
+                    <p class="card-text">Price: $@product.Price</p>
+                        @if(isLoggedIn)
+                        {
+                            <button type="button" class="btn btn-success" onclick=@(() => OrderHandler(product.Id))>Order</button>
+                        }
+                  </div>
+                </div>
+            </div>
+    }
+    </div>
+    <nav>
+          <ul class="pagination">
+            <li class="page-item @(pagination.hasPrevious ? "" : "disabled")">
+              <NavLink class="page-link" href=@("shops/" + shopId + "?PageNumber=" + (pagination.currentPage-1) + "&PageSize=1")>Previous</NavLink>
+            </li>
+                @for(int i=1;i<=@pagination.totalPages;i++)
+                {
+                    <li class="page-item @(pagination.currentPage == i ? "active" : "")">
+                        <a class="page-link" href=@("shops/" + shopId + "?PageNumber=" + i + "&PageSize=1")>
+                            @i
+                        </a>
+                    </li>
+                }
+            <li class="page-item @(pagination.hasNext ? "" : "disabled")">
+                <NavLink class="page-link" href=@("shops/" + shopId + "?PageNumber=" + (pagination.currentPage+1) + "&PageSize=1")>Next</NavLink>
+            </li>
+          </ul>
+        </nav>
+}
+
+@code {
+    ShopResponse shop;
+    List<ProductResponse> products;
+    PaginationInfo pagination; 
+
+    [CascadingParameter]
+    bool isLoggedIn { get; set; }
+
+    [Parameter]
+    public int shopId { get; set; }
+
+    [CascadingParameter]
+    CartModel Cart { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "PageNumber")]
+    public int PageNumber { get; set; } = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavManager.LocationChanged += NavigationManager_LocationChanged;
+
+        shop = await Http.GetFromJsonAsync<ShopResponse>("Shops/" + shopId);
+        await LoadData();
+    }
+
+    private async Task OrderHandler(int ProductId)
+    {
+        if(Cart.Products.ContainsKey(ProductId))
+        {
+            Cart.Products[ProductId]++;
+        } else
+        {
+            Cart.Products.Add(ProductId, 1);
+        }
+        await JsRuntime.InvokeVoidAsync("alert", "Added new item to the cart");
+
+    }
+
+    private async Task LoadData()
+    {
+        var response = await Http.GetAsync("Products?ShopId="+shopId+"&PageNumber="+PageNumber+"&PageSize=1");
+        products = await HttpResponseConverter.StreamWithNewtonsoftJson<List<ProductResponse>>(response);
+        if (response.Headers.Contains("X-Pagination"))
+        {
+            var paginationInfo = response.Headers.GetValues("X-Pagination").First();
+            JObject json = JObject.Parse(paginationInfo);
+            var props = Array.ConvertAll(typeof(PaginationInfo).GetProperties().ToArray(), prop => prop.Name);
+            pagination = new PaginationInfo();
+            foreach (var e in json)
+            {
+                if (props.Contains(e.Key))
+                {
+                    var prop = pagination.GetType().GetProperty(e.Key);
+                    prop.SetValue(pagination, Convert.ChangeType(e.Value, prop.PropertyType));
+                }
+            }
+        }
+    }
+
+    private void NavigationManager_LocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        LoadData().ContinueWith((o) => StateHasChanged());
+    }
+
+    void Dispose() => NavManager.LocationChanged -= NavigationManager_LocationChanged;
+}

@@ -51,7 +51,6 @@ namespace BLL.Services
             user.LastName = request.LastName;
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
-            user.DefaultAddressId = request.DefaultAddressId;
 
             await userManager.UpdateAsync(user);
             await unitOfWork.Commit();

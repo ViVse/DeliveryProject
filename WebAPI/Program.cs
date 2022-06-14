@@ -1,4 +1,5 @@
 using Application.Common.Interfaces;
+using Application.Common.Mappings;
 using Application.Orders.Commands.CreateOrder;
 using AutoMapper;
 using BLL.Configurations;
@@ -50,6 +51,7 @@ builder.Services.AddTransient<IUsersService, UsersService>();
 var mapperConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new AutoMapperProfile());
+    mc.AddProfile(new MappingProfile());
 });
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
@@ -57,7 +59,13 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddTransient<JwtTokenConfiguration>();
 builder.Services.AddTransient<IJwtTokenFactory, JwtSecurityTokenFactory>();
 
-builder.Services.AddIdentityCore<User>()
+builder.Services.AddIdentityCore<User>(setupAction =>
+{
+    setupAction.Password.RequireDigit = true;
+    setupAction.Password.RequireLowercase = true;
+    setupAction.Password.RequireNonAlphanumeric = false;
+    setupAction.Password.RequireUppercase = true;
+})
     .AddRoles<IdentityRole>()
     .AddSignInManager<SignInManager<User>>()
     .AddDefaultTokenProviders()
@@ -94,7 +102,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //Clean
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddMediatR(typeof(CreateOrderCommand).GetTypeInfo().Assembly);
-//builder.Services.AddApplicationServices();
+builder.Services.AddApplicationServices();
 
 builder.Services.AddScoped<IMongoDbContext>(s =>
 {
@@ -145,6 +153,18 @@ builder.Services.AddSwaggerGen(c =>
                 });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder.WithOrigins("https://localhost:7177", "http://localhost:5177")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                .WithExposedHeaders("*");
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -161,5 +181,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();
