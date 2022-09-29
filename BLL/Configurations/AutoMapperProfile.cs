@@ -13,8 +13,6 @@ namespace BLL.Configurations
             CreateUsersMaps();
             CreateProductMaps();
             CreateShopMaps();
-            CreateDeliveryManMaps();
-            CreateReviewMaps();
         }
 
         private void CreateUsersMaps()
@@ -50,18 +48,6 @@ namespace BLL.Configurations
                 options => options.MapFrom(address => address.Address.Latitude))
                   .ForMember(response => response.Longitude,
                 options => options.MapFrom(address => address.Address.Longitude));
-        }
-
-        private void CreateDeliveryManMaps()
-        {
-            CreateMap<DeliveryManRequest, DeliveryMan>();
-            CreateMap<DeliveryMan, DeliveryManResponse>();
-        }
-
-        private void CreateReviewMaps()
-        {
-            CreateMap<ReviewRequest, Review>();
-            CreateMap<Review, ReviewResponse>();
         }
     }
 }

@@ -7,6 +7,5 @@ namespace DAL.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Avatar { get; set; }
-        public List<Review> Reviews { get; set; }
     }
 }

@@ -17,8 +17,6 @@ namespace DAL.Data
         public IAddressRepository AddressRepository { get; }
         public IProductRepository ProductRepository { get; }
         public IShopRepository ShopRepository { get; }
-        public IReviewRepository ReviewRepository { get; }
-        public IDeliveryManRepository DeliveryManRepository { get; }
 
         public UnitOfWork(
             /*SqlConnection sqlConnection,
@@ -28,9 +26,7 @@ namespace DAL.Data
             SignInManager<User> signInManager,
             IAddressRepository addressRepository,
             IProductRepository productRepository, 
-            IShopRepository shopRepository,
-            IReviewRepository reviewRepository,
-            IDeliveryManRepository deliveryManRepository)
+            IShopRepository shopRepository)
         {
            /* _sqlConnection = sqlConnection;
             _dbTransaction = dbTransaction;*/
@@ -40,8 +36,6 @@ namespace DAL.Data
             AddressRepository = addressRepository;
             ProductRepository = productRepository;
             ShopRepository = shopRepository;
-            ReviewRepository = reviewRepository;
-            DeliveryManRepository = deliveryManRepository;
         }
 
         public async Task Commit()
