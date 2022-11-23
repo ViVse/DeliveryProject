@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  cartdb:
+    image: redis
+
+  cart.api:
+    image: ${DOCKER_REGISTRY-}cartapi
+    build:
+      context: .
+      dockerfile: CartService/Cart.API/Dockerfile

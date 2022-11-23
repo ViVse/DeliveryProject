@@ -5,33 +5,39 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CatalogueService", "CatalogueService", "{DEF47DEA-7048-446C-9929-D28FB3C9C597}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{A72A92A2-CE58-490C-9543-367736B4B4B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "CatalogueService\DAL\DAL.csproj", "{A72A92A2-CE58-490C-9543-367736B4B4B3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "BLL\BLL.csproj", "{258DBC19-B8FF-4D5B-AB00-7B3679B94FDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BLL", "CatalogueService\BLL\BLL.csproj", "{258DBC19-B8FF-4D5B-AB00-7B3679B94FDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderService", "OrderService", "{2C49E782-9819-4B50-BA2C-C69CD267E25F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{AAA962EF-5FCF-4B6D-B95E-890E37A21AD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "OrderService\Domain\Domain.csproj", "{AAA962EF-5FCF-4B6D-B95E-890E37A21AD4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{C41F061C-1587-4476-8277-5E64864D5DA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "OrderService\Application\Application.csproj", "{C41F061C-1587-4476-8277-5E64864D5DA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "OrderService\Infrastructure\Infrastructure.csproj", "{A99B34F9-5A6C-44B7-85D0-A33513D9C33B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeliveryService", "DeliveryService", "{82A89604-E68B-44F2-84C5-66043198EE72}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_DAL", "Dapper_DAL\Dapper_DAL.csproj", "{3214F1F3-760E-43FA-BC27-0AA3648F8215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_DAL", "DeliveryService\Dapper_DAL\Dapper_DAL.csproj", "{3214F1F3-760E-43FA-BC27-0AA3648F8215}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_BLL", "Dapper_BLL\Dapper_BLL.csproj", "{E7AA7D08-1EBA-4B14-9FE6-92527F8DD11C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_BLL", "DeliveryService\Dapper_BLL\Dapper_BLL.csproj", "{E7AA7D08-1EBA-4B14-9FE6-92527F8DD11C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_Controller", "Dapper_Controller\Dapper_Controller.csproj", "{ACAE059D-013A-44E1-B669-2C4F80C91854}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper_Controller", "DeliveryService\Dapper_Controller\Dapper_Controller.csproj", "{ACAE059D-013A-44E1-B669-2C4F80C91854}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanController", "CleanController\CleanController.csproj", "{A88080B6-CD80-45FD-AE5C-0ED548B3FCBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanController", "OrderService\CleanController\CleanController.csproj", "{A88080B6-CD80-45FD-AE5C-0ED548B3FCBC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFController", "EFController\EFController.csproj", "{325845B5-B58F-4AB1-8AC0-434EB4D35F94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EFController", "CatalogueService\EFController\EFController.csproj", "{325845B5-B58F-4AB1-8AC0-434EB4D35F94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL", "GraphQL\GraphQL.csproj", "{39750673-2B13-4368-95BF-0672E85D2EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL", "ReviewService\GraphQL\GraphQL.csproj", "{39750673-2B13-4368-95BF-0672E85D2EF7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReviewService", "ReviewService", "{62C61ADE-B3E6-4964-AC1E-09A2276FAA60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CartService", "CartService", "{054CE5A8-3AA8-42AE-99C3-A09C21BF8ADD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cart.API", "CartService\Cart.API\Cart.API.csproj", "{14773E7D-19FE-42D4-926C-4D2F23F3DD53}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{F179AC1C-E80E-42AB-A4E5-91E71FDA6E0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +89,14 @@ Global
 		{39750673-2B13-4368-95BF-0672E85D2EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39750673-2B13-4368-95BF-0672E85D2EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39750673-2B13-4368-95BF-0672E85D2EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14773E7D-19FE-42D4-926C-4D2F23F3DD53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14773E7D-19FE-42D4-926C-4D2F23F3DD53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14773E7D-19FE-42D4-926C-4D2F23F3DD53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14773E7D-19FE-42D4-926C-4D2F23F3DD53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F179AC1C-E80E-42AB-A4E5-91E71FDA6E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F179AC1C-E80E-42AB-A4E5-91E71FDA6E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F179AC1C-E80E-42AB-A4E5-91E71FDA6E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F179AC1C-E80E-42AB-A4E5-91E71FDA6E0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +113,7 @@ Global
 		{A88080B6-CD80-45FD-AE5C-0ED548B3FCBC} = {2C49E782-9819-4B50-BA2C-C69CD267E25F}
 		{325845B5-B58F-4AB1-8AC0-434EB4D35F94} = {DEF47DEA-7048-446C-9929-D28FB3C9C597}
 		{39750673-2B13-4368-95BF-0672E85D2EF7} = {62C61ADE-B3E6-4964-AC1E-09A2276FAA60}
+		{14773E7D-19FE-42D4-926C-4D2F23F3DD53} = {054CE5A8-3AA8-42AE-99C3-A09C21BF8ADD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DEDD859-9D4D-452C-B8D5-9347C0C003BA}
