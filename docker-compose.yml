@@ -2,10 +2,26 @@ version: '3.4'
 
 services:
   cartdb:
-    image: redis
+    image: redis:alpine
+
+  discountdb:
+    image: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
 
   cart.api:
     image: ${DOCKER_REGISTRY-}cartapi
     build:
       context: .
       dockerfile: CartService/Cart.API/Dockerfile
+
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discountapi
+    build:
+      context: .
+      dockerfile: DiscountService/Discount.API/Dockerfile
+
+volumes:
+  postgres_data:
+  pgadmin_data:
