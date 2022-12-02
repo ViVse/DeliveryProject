@@ -18,8 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\DiscountService\Discount.Grpc\Protos\coupon.proto" GrpcServices="Server">
+    <Protobuf Include="..\..\DiscountService\Discount.Grpc\Protos\coupon.proto" GrpcServices="Client">
       <Link>Protos\coupon.proto</Link>
+    </Protobuf>
+    <Protobuf Include="..\..\DiscountService\Discount.Grpc\Protos\productDiscount.proto" GrpcServices="Client">
+      <Link>Protos\productDiscount.proto</Link>
     </Protobuf>
   </ItemGroup>
 

@@ -1,5 +1,7 @@
+using Cart.API.GrpcServices;
 using Cart.API.Repositories;
 using Cart.API.Repositories.Interfaces;
+using Discount.Grpc.Protos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ builder.Services.AddStackExchangeRedisCache(options => {
 
 // General Configuration
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddGrpcClient<ProductDiscountProtoService.ProductDiscountProtoServiceClient>
+    (o => o.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]));
+builder.Services.AddScoped<ProductDiscountGrpcService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
