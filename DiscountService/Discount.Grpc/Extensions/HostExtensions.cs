@@ -1,9 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Npgsql;
-using System;
+﻿using Npgsql;
 
 namespace Discount.Grpc.Extensions
 {
@@ -31,6 +26,7 @@ namespace Discount.Grpc.Extensions
                         Connection = connection
                     };
 
+                    //Coupon Table
                     command.CommandText = "DROP TABLE IF EXISTS Coupon";
                     command.ExecuteNonQuery();
 
@@ -50,6 +46,28 @@ namespace Discount.Grpc.Extensions
 
                     command.CommandText = "INSERT INTO Coupon (Code, Description, IsPercent, Amount) VALUES ('vldIsDXPPu', 'New coupon', TRUE, 5);";
                     command.ExecuteNonQuery();
+                    logger.LogInformation("Coupon table created.");
+
+                    //ProductDiscount Table
+                    command.CommandText = "DROP TABLE IF EXISTS ProductDiscount";
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = @"CREATE TABLE ProductDiscount(
+	                    ID SERIAL PRIMARY KEY NOT NULL,
+	                    ProductId INT UNIQUE,
+	                    IsPercent Boolean NOT NULL,
+	                    Amount Int NOT NULL
+                    )
+                    ";
+                    command.ExecuteNonQuery();
+
+
+                    command.CommandText = "INSERT INTO ProductDiscount (ProductId, IsPercent, Amount) VALUES (1, FALSE, 100);";
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = "INSERT INTO ProductDiscount (ProductId, IsPercent, Amount) VALUES (2, TRUE, 5);";
+                    command.ExecuteNonQuery();
+                    logger.LogInformation("ProductDiscount table created.");
 
                     logger.LogInformation("Migrated postresql database.");
                 }
