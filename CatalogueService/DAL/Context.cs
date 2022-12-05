@@ -21,7 +21,7 @@ namespace DAL
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfiguration config = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../EFController"))
@@ -29,7 +29,7 @@ namespace DAL
                 .Build();
 
             optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("EFController"));
-        }
+        }*/
 
         public Context(DbContextOptions<Context> options): base(options) { }
     }

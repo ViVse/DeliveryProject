@@ -41,7 +41,7 @@ namespace DAL.Data.Repositories
             return await table.FindAsync(id) ?? throw new EntityNotFoundException(GetEntityNotFoundErrorMeassage(id));
         }
 
-        public virtual async Task InsertAsync(TEntity entity) => await Task.Run(() => table.AddAsync(entity));
+        public virtual async Task InsertAsync(TEntity entity) => await table.AddAsync(entity);
 
         public virtual async Task UpdateAsync(TEntity entity) => await Task.Run(() => table.Update(entity));
 

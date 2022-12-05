@@ -1,6 +1,14 @@
 version: '3.4'
 
 services:
+  orderdb:
+    container_name: orderdb
+    restart: always
+    ports:
+        - "27017:27017"
+    volumes:
+        - mongo_data:/data/db
+
   cartdb:
     container_name: cartdb
     restart: always
@@ -35,6 +43,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CacheSettings:ConnectionString=cartdb:6379"
+      - "GrpcSettings:DiscountUrl=http://discount.grpc"
     depends_on:
       - cartdb
     ports:
@@ -49,9 +58,24 @@ services:
       - discountdb
     ports:
       - "8002:80"
+
   discount.grpc:
+    container_name: discount.grpc
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;"
+    depends_on:
+      - discountdb
     ports:
-      - "80"
+      - "8003:80"
 
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:mongoDb=mongodb://orderdb:27017"
+      - MongoDbName=delivery,
+    depends_on:
+      - orderdb
+    ports:
+      - "8004:80"
