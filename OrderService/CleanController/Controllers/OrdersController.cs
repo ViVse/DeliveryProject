@@ -11,7 +11,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
-namespace CleanController.Controllers
+namespace Ordering.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -61,20 +61,11 @@ namespace CleanController.Controllers
                 List<Product> products = new List<Product>();
                 foreach (int productId in request.Products.Keys)
                 {
-                    /*var product = await _productService.GetByIdAsync(productId);*/
-                    var newProduct = new Product()
-                    {
-                        Id = productId,
-                        Name = /*product.Name*/ "",
-                        Price = /*product.Price*/ 0,
-                        Amount = request.Products[productId]
-                    };
-                    totalPrice += newProduct.Price * newProduct.Amount;
-                    products.Add(newProduct);
+                    products.Add(request.Products[productId]);
                 }
                 command = new CreateOrderCommand()
                 {
-                    TotalPrice = totalPrice,
+                    TotalPrice = request.TotalPrice,
                     OrderStatus = request.OrderStatus,
                     Customer = new Customer() { Id = request.CustomerId, FullName = /*customer.FullName*/ "", Phone = /*customer.PhoneNumber */ ""},
                     DeliveryMan = new DeliveryMan() { Id = request.DeliveryManId, FullName = /*deliveryMan.FirstName + " " + deliveryMan.LastName*/ "", Phone = /*deliveryMan.Phone */ ""},
@@ -123,26 +114,16 @@ namespace CleanController.Controllers
                /* var customer = await _usersService.GetByIdAsync(request.CustomerId);
                 var deliveryMan = await _deliveryManService.GetByIdAsync(request.DeliveryManId);
                 var address = await _addressService.GetByIdAsync(request.AddressId);*/
-                float totalPrice = 0;
                 List<Product> products = new List<Product>();
                 foreach (int productId in request.Products.Keys)
                 {
-                    /*var product = await _productService.GetByIdAsync(productId);*/
-                    var newProduct = new Product()
-                    {
-                        Id = productId,
-                        Name = /*product.Name*/ "",
-                        Price = /*product.Price*/ 0,
-                        Amount = request.Products[productId]
-                    };
-                    totalPrice += newProduct.Price * newProduct.Amount;
-                    products.Add(newProduct);
+                    products.Add(request.Products[productId]);
                 }
                 command = new UpdateOrderCommand()
                 {
                     Id = request.Id,
                     Date = request.Date,
-                    TotalPrice = totalPrice,
+                    TotalPrice = request.TotalPrice,
                     OrderStatus = request.OrderStatus,
                     Customer = new Customer() { Id = request.CustomerId, FullName = /*customer.FullName*/ "", Phone = /*customer.PhoneNumber */ ""},
                     DeliveryMan = new DeliveryMan() { Id = request.DeliveryManId, FullName = /*deliveryMan.FirstName + " " + deliveryMan.LastName*/ "", Phone = /*deliveryMan.Phone */ ""},

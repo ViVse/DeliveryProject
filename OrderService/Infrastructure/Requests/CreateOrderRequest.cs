@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 
 namespace Infrastructure.Requests
 {
@@ -8,6 +9,7 @@ namespace Infrastructure.Requests
         public int DeliveryManId { get; set; }
         public OrderStatusEnum OrderStatus { get; set; }
         public int AddressId { get; set; }
-        public Dictionary<int, int> Products { get; set; }
+        public Dictionary<int, Product> Products { get; set; }
+        public int TotalPrice { get; set; }
     }
 }
