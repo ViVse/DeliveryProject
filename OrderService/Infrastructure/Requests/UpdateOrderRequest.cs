@@ -10,8 +10,8 @@ namespace Infrastructure.Requests
         public int DeliveryManId { get; set; }
         public DateTime Date { get; set; }
         public OrderStatusEnum OrderStatus { get; set; }
-        public int AddressId { get; set; }
-        public Dictionary<int, Product> Products { get; set; }
-        public int TotalPrice { get; set; }
+        public string AddressLine { get; set; }
+        public List<Product> Products { get; set; }
+        public float TotalPrice { get; set; }
     }
 }

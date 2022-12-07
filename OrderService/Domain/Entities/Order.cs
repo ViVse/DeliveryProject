@@ -5,12 +5,12 @@ namespace Domain.Entities
 {
     public class Order: BaseEntity
     {
-        public Customer Customer { get; set; }
+        public string UserId { get; set; }
         public float TotalPrice { get; set; }
         public DateTime Date { get; set; }
-        public DeliveryMan DeliveryMan { get; set; }
+        public int DeliveryManId { get; set; }
         public OrderStatusEnum OrderStatus { get; set; }
-        public Address Address { get; set; }
+        public string AddressLine { get; set; }
         public List<Product> Products { get; set; }
     }
 }
