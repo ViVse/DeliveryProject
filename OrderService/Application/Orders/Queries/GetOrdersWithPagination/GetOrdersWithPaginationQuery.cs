@@ -48,7 +48,7 @@ namespace Application.Orders.Queries.GetOrdersWithPagination
 
             var customerFilter = request.CustomerId is null || request.CustomerId.Trim() == String.Empty ?
                 Builders<Order>.Filter.Empty 
-                : Builders<Order>.Filter.Eq("Customer._id", request.CustomerId);
+                : Builders<Order>.Filter.Eq("UserId", request.CustomerId);
             var orderStatusFilter = request.OrderStatus is null ?
                  Builders<Order>.Filter.Empty
                 : Builders<Order>.Filter.Eq("OrderStatus", request.OrderStatus);

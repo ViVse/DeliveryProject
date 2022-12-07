@@ -21,28 +21,11 @@ namespace Ordering.API.Controllers
         private IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<IMediator>();
         private readonly ILogger<OrdersController> _logger;
 
-
-        /* 
-         * Used to check whether ids are present in databases
-         * add depandencies before uncommenting
-         private readonly IUsersService _usersService;
-         private readonly IProductService _productService;
-         private readonly IDeliveryManService _deliveryManService;
-         private readonly IAddressService _addressService;*/
-
         public OrdersController(
            ILogger<OrdersController> logger
-         /*  IUsersService usersService,
-           IProductService productService,
-           IDeliveryManService deliveryManService,
-           IAddressService addressService */
          )
         {
             _logger = logger;
-           /* _usersService = usersService;
-            _productService = productService;
-            _deliveryManService = deliveryManService;
-            _addressService = addressService;*/
         }
 
         [HttpPost]
@@ -51,34 +34,15 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<string>> Create(CreateOrderRequest request)
         {
-            CreateOrderCommand command;
-            try
+            CreateOrderCommand command = new CreateOrderCommand()
             {
-               /* var customer = await _usersService.GetByIdAsync(request.CustomerId);
-                var deliveryMan = await _deliveryManService.GetByIdAsync(request.DeliveryManId);
-                var address = await _addressService.GetByIdAsync(request.AddressId);*/
-                float totalPrice = 0;
-                List<Product> products = new List<Product>();
-                foreach (int productId in request.Products.Keys)
-                {
-                    products.Add(request.Products[productId]);
-                }
-                command = new CreateOrderCommand()
-                {
-                    TotalPrice = request.TotalPrice,
-                    OrderStatus = request.OrderStatus,
-                    Customer = new Customer() { Id = request.CustomerId, FullName = /*customer.FullName*/ "", Phone = /*customer.PhoneNumber */ ""},
-                    DeliveryMan = new DeliveryMan() { Id = request.DeliveryManId, FullName = /*deliveryMan.FirstName + " " + deliveryMan.LastName*/ "", Phone = /*deliveryMan.Phone */ ""},
-                    Products = products,
-                    Address = new Address() { Id = request.AddressId, AddressLine = /*$"{address.City}, {address.AddressLine}" */ ""}
-                };
-            }
-            catch (NotFoundException ex)
-            {
-                string errorMessage = "Couldn't find entity with specified id: " + ex.Message;
-                _logger.LogError(errorMessage);
-                return BadRequest(errorMessage);
-            }
+                TotalPrice = request.TotalPrice,
+                OrderStatus = request.OrderStatus,
+                UserId = request.CustomerId,
+                DeliveryManId = request.DeliveryManId,
+                Products = request.Products,
+                AddressLine = request.AddressLine
+            };
 
             try
             {
@@ -108,35 +72,17 @@ namespace Ordering.API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<string>> Update(UpdateOrderRequest request)
         {
-            UpdateOrderCommand command;
-            try
+            UpdateOrderCommand command = new UpdateOrderCommand()
             {
-               /* var customer = await _usersService.GetByIdAsync(request.CustomerId);
-                var deliveryMan = await _deliveryManService.GetByIdAsync(request.DeliveryManId);
-                var address = await _addressService.GetByIdAsync(request.AddressId);*/
-                List<Product> products = new List<Product>();
-                foreach (int productId in request.Products.Keys)
-                {
-                    products.Add(request.Products[productId]);
-                }
-                command = new UpdateOrderCommand()
-                {
-                    Id = request.Id,
-                    Date = request.Date,
-                    TotalPrice = request.TotalPrice,
-                    OrderStatus = request.OrderStatus,
-                    Customer = new Customer() { Id = request.CustomerId, FullName = /*customer.FullName*/ "", Phone = /*customer.PhoneNumber */ ""},
-                    DeliveryMan = new DeliveryMan() { Id = request.DeliveryManId, FullName = /*deliveryMan.FirstName + " " + deliveryMan.LastName*/ "", Phone = /*deliveryMan.Phone */ ""},
-                    Products = products,
-                    Address = new Address() { Id = request.AddressId, AddressLine = /*$"{address.City}, {address.AddressLine}" */ ""}
-                };
-            }
-            catch (NotFoundException ex)
-            {
-                string errorMessage = "Couldn't find entity with specified id: " + ex.Message;
-                _logger.LogError(errorMessage);
-                return BadRequest(errorMessage);
-            }
+                Id = request.Id,
+                Date = request.Date,
+                TotalPrice = request.TotalPrice,
+                OrderStatus = request.OrderStatus,
+                UserId = request.CustomerId,
+                DeliveryManId = request.DeliveryManId,
+                Products = request.Products,
+                AddressLine = request.AddressLine
+            }; 
 
             try
             {

@@ -11,12 +11,12 @@ namespace Application.Orders.Commands.UpdateOrder
     public record UpdateOrderCommand : IRequest<string>
     {
         public string Id { get; set;}
-        public Customer Customer { get; set; }
+        public string UserId { get; set; }
         public float TotalPrice { get; set; }
-        public DeliveryMan DeliveryMan { get; set; }
         public DateTime Date { get; set; }
+        public int DeliveryManId { get; set; }
         public OrderStatusEnum OrderStatus { get; set; }
-        public Address Address { get; set; }
+        public string AddressLine { get; set; }
         public List<Product> Products { get; set; }
     }
 
@@ -34,12 +34,12 @@ namespace Application.Orders.Commands.UpdateOrder
             var entity = new Order
             {
                 Id = request.Id,
-                Customer = request.Customer,
+                UserId = request.UserId,
                 TotalPrice = request.TotalPrice,
-                Date = request.Date,
-                DeliveryMan = request.DeliveryMan,
+                Date = DateTime.Now,
+                DeliveryManId = request.DeliveryManId,
                 OrderStatus = request.OrderStatus,
-                Address = request.Address,
+                AddressLine = request.AddressLine,
                 Products = request.Products
             };
 

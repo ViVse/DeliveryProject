@@ -8,11 +8,11 @@ namespace Application.Orders.Commands.CreateOrder
 {
     public record CreateOrderCommand: IRequest<string>
     {
-        public Customer Customer { get; set; }
+        public string UserId { get; set; }
         public float TotalPrice { get; set; }
-        public DeliveryMan DeliveryMan { get; set; }
+        public int DeliveryManId { get; set; }
         public OrderStatusEnum OrderStatus { get; set; }
-        public Address Address { get; set; }
+        public string AddressLine { get; set; }
         public List<Product> Products { get; set; }
     }
 
@@ -29,12 +29,12 @@ namespace Application.Orders.Commands.CreateOrder
         {
             var entity = new Order
             {
-                Customer = request.Customer,
+                UserId = request.UserId,
                 TotalPrice = request.TotalPrice,
                 Date = DateTime.Now,
-                DeliveryMan = request.DeliveryMan,
+                DeliveryManId = request.DeliveryManId,
                 OrderStatus = request.OrderStatus,
-                Address = request.Address,
+                AddressLine = request.AddressLine,
                 Products = request.Products
             };
 
