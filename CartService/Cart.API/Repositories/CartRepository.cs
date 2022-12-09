@@ -14,21 +14,21 @@ namespace Cart.API.Repositories
             _redisCache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
-        public async Task<ShoppingCart> GetBasket(string userName)
+        public async Task<ShoppingCart> GetBasket(string userId)
         {
-            return await _redisCache.GetRecordAsync<ShoppingCart>(userName);
+            return await _redisCache.GetRecordAsync<ShoppingCart>(userId);
         }
 
         public async Task<ShoppingCart> UpdateBasket(ShoppingCart basket)
         {
-            await _redisCache.SetRecordAsync<ShoppingCart>(basket.UserName, basket, TimeSpan.FromDays(7), TimeSpan.FromDays(2));
+            await _redisCache.SetRecordAsync<ShoppingCart>(basket.UserId, basket, TimeSpan.FromDays(7), TimeSpan.FromDays(2));
 
-            return await GetBasket(basket.UserName);
+            return await GetBasket(basket.UserId);
         }
 
-        public async Task DeleteBasket(string userName)
+        public async Task DeleteBasket(string userId)
         {
-            await _redisCache.RemoveAsync(userName);
+            await _redisCache.RemoveAsync(userId);
         }
     }
 }

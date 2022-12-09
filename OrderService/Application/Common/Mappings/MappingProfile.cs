@@ -13,6 +13,7 @@ public class MappingProfile : Profile
     {
         CreateMap<Order, OrderBriefDto>().ForMember(response => response.OrderStatus,
                 options => options.MapFrom(order => order.OrderStatus.getValue()));
+        CreateMap<EventBus.Messages.Events.Product, Product>();
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
         
     }

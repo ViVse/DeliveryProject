@@ -4,8 +4,8 @@ namespace Cart.API.Repositories.Interfaces
 {
     public interface ICartRepository
     {
-        Task<ShoppingCart> GetBasket(string userName);
+        Task<ShoppingCart> GetBasket(string userId);
         Task<ShoppingCart> UpdateBasket(ShoppingCart basket);
-        Task DeleteBasket(string userName);
+        Task DeleteBasket(string userId);
     }
 }

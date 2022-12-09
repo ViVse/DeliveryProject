@@ -1,12 +1,9 @@
-﻿namespace Cart.API.Entities
+﻿namespace Cart.API.Requests
 {
-    public class Checkout
+    public class CheckoutRequest
     {
         public string UserId { get; set; }
-        public decimal TotalPrice { get; set; }
-
         public string AddressLine { get; set; }
-        public List<ShoppingCartItem> Products { get; set; }
 
         //Payment
         public string CardName { get; set; }
