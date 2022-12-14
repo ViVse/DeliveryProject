@@ -1,13 +1,9 @@
-﻿using DAL.Entities;
-using DAL.Interfaces.Repositories;
-using Microsoft.AspNetCore.Identity;
+﻿using DAL.Interfaces.Repositories;
 
 namespace DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        UserManager<User> UserManager { get; }
-        SignInManager<User> SignInManager { get; }
         IAddressRepository AddressRepository { get; }
         IProductRepository ProductRepository { get; }
         IShopRepository ShopRepository { get; }

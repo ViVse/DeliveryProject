@@ -10,18 +10,8 @@ namespace BLL.Configurations
         public AutoMapperProfile()
         {
             CreateAddressMaps();
-            CreateUsersMaps();
             CreateProductMaps();
             CreateShopMaps();
-        }
-
-        private void CreateUsersMaps()
-        {
-            CreateMap<UserSignUpRequest, User>();
-            CreateMap<UserRequest, User>();
-            CreateMap<User, UserResponse>()
-                .ForMember(response => response.FullName,
-                options => options.MapFrom(user => $"{user.FirstName} {user.LastName}"));
         }
 
         private void CreateAddressMaps()

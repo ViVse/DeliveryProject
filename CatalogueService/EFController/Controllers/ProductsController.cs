@@ -84,9 +84,15 @@ namespace EFController.Controllers
                 if (!results.IsValid)
                     return BadRequest(results.ToString("\n"));
 
-                var shop = await shopService.GetByIdAsync(request.ShopId);
-                if (shop == null)
-                    return BadRequest("Invalid shopId");
+                try
+                {
+                    var shop = await shopService.GetByIdAsync(request.ShopId);
+                    if (shop == null)
+                        return BadRequest("Invalid shopId");
+                } catch(EntityNotFoundException ex)
+                {
+                    return BadRequest(ex.Message);
+                }
 
                 await productService.InsertAsync(request);
                 return Ok();
@@ -109,9 +115,16 @@ namespace EFController.Controllers
                 if (!results.IsValid)
                     return BadRequest(results.ToString("\n"));
 
-                var shop = await shopService.GetByIdAsync(request.ShopId);
-                if (shop == null)
-                    return BadRequest("Invalid shopId");
+                try
+                {
+                    var shop = await shopService.GetByIdAsync(request.ShopId);
+                    if (shop == null)
+                        return BadRequest("Invalid shopId");
+                }
+                catch (EntityNotFoundException ex)
+                {
+                    return BadRequest(ex.Message);
+                }
 
                 await productService.UpdateAsync(request);
                 return Ok();
