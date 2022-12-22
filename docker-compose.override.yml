@@ -27,6 +27,15 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
 
+  catalogdb:
+    container_name: catalogdb
+    user: root
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=admin1234!
+    ports:
+      - "1433:1433"
+
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -90,3 +99,28 @@ services:
       - rabbitmq
     ports:
       - "8004:80"
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Data Source=catalogdb,1433;Initial Catalog=DeliveryDb;User Id=SA; Password=admin1234!; TrustServerCertificate=True;"
+    ports:
+      - "8005:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    depends_on:
+      - catalogdb
+
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - cart.api
+      - discount.api
+      - ordering.api
+      - catalog.api
+    ports:
+      - "8010:80"

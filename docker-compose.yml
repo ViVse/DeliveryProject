@@ -10,6 +10,9 @@ services:
   discountdb:
     image: postgres
 
+  catalogdb:
+    image: mcr.microsoft.com/mssql/server
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
@@ -40,9 +43,20 @@ services:
       context: .
       dockerfile: OrderService/CleanController/Dockerfile
 
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}efcontroller
+    build:
+      context: .
+      dockerfile: CatalogueService/EFController/Dockerfile
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGw/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
-
 

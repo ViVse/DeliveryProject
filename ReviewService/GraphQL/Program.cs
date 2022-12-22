@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPooledDbContextFactory<AppDbContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+    opt.UseSqlServer(builder.Configuration.GetValue<string>("ConnectionStrings:ConStr")));
 
 builder.Services
     .AddGraphQLServer()

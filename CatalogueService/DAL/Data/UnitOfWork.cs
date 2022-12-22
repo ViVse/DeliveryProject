@@ -21,6 +21,7 @@ namespace DAL.Data
             AddressRepository = addressRepository;
             ProductRepository = productRepository;
             ShopRepository = shopRepository;
+            context.Database.EnsureCreated();
         }
 
         public async Task Commit()

@@ -5,7 +5,10 @@ namespace GraphQL.Data
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions options) : base(options) { }
+        public AppDbContext(DbContextOptions options) : base(options) { 
+            Database.EnsureCreated();
+            Database.Migrate();
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Review> Reviews { get; set; }
