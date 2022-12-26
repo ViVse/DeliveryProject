@@ -13,6 +13,9 @@ services:
   catalogdb:
     image: mcr.microsoft.com/mssql/server
 
+  userdb:
+    image: mcr.microsoft.com/mssql/server
+
   rabbitmq:
     image: rabbitmq:3-management-alpine
 
@@ -55,8 +58,15 @@ services:
       context: .
       dockerfile: ApiGateways/OcelotApiGw/Dockerfile
 
+  user.api:
+    image: ${DOCKER_REGISTRY-}userapi
+    build:
+      context: .
+      dockerfile: IdentityService/User.API/Dockerfile
+
 volumes:
   mongo_data:
   postgres_data:
   pgadmin_data:
+
 

@@ -36,6 +36,15 @@ services:
     ports:
       - "1433:1433"
 
+  userdb:
+    container_name: userdb
+    user: root
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=admin1234!
+    ports:
+      - "8033:1433"
+
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -124,3 +133,17 @@ services:
       - catalog.api
     ports:
       - "8010:80"
+
+  user.api:
+    container_name: user.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=userdb,1433;Database=UserDb;User Id=SA;Password=admin1234!;TrustServerCertificate=True;"
+      - "JwtIssuer=http://localhost:8011"
+      - "JwyAudience=http://localhost:8010"
+      - "JwtSecurityKey=random key value for encodingjewfbjhb"
+    ports:
+      - "8011:80"
+    depends_on:
+      - userdb
+
