@@ -20,7 +20,7 @@ namespace IdentityServer
             );
 
             services
-                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddIdentity<UserModel, IdentityRole>()
                 .AddEntityFrameworkStores<AspNetIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -62,14 +62,16 @@ namespace IdentityServer
 
         private static void EnsureUsers(IServiceScope scope)
         {
-            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<UserModel>>();
 
             var testUser = userMgr.FindByNameAsync("testUser").Result;
             if (testUser == null)
             {
-                testUser = new IdentityUser
+                testUser = new UserModel
                 {
                     UserName = "testUser",
+                    FirstName = "test",
+                    LastName = "user",
                     Email = "testUser@email.com",
                     EmailConfirmed = true
                 };
@@ -84,11 +86,38 @@ namespace IdentityServer
                         testUser,
                         new Claim[]
                         {
-                            new Claim(JwtClaimTypes.Name, "Test User"),
-                            new Claim(JwtClaimTypes.GivenName, "Test"),
-                            new Claim(JwtClaimTypes.FamilyName, "User"),
-                            new Claim(JwtClaimTypes.WebSite, "http://testuser.com"),
-                            new Claim("location", "somewhere")
+                            new Claim("role", "user")
+                        }
+                    ).Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+            }
+
+            var testAdmin = userMgr.FindByNameAsync("admin").Result;
+            if (testAdmin == null)
+            {
+                testAdmin = new UserModel
+                {
+                    UserName = "admin",
+                    FirstName = "admin",
+                    LastName = "admin",
+                    Email = "admin@email.com",
+                    EmailConfirmed = true
+                };
+                var result = userMgr.CreateAsync(testAdmin, "Pass123$").Result;
+                if (!result.Succeeded)
+                {
+                    throw new Exception(result.Errors.First().Description);
+                }
+
+                result =
+                    userMgr.AddClaimsAsync(
+                        testAdmin,
+                        new Claim[]
+                        {
+                            new Claim("role", "admin")
                         }
                     ).Result;
                 if (!result.Succeeded)

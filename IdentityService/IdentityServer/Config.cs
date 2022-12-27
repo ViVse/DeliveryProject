@@ -41,6 +41,13 @@ namespace IdentityServer
                     ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
                     AllowedScopes = { "DeliveryAPI.read", "DeliveryAPI.write" }
                 },
+                new Client
+                {
+                    ClientId = "user_client_id",
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets = { new Secret("ClientSecret1".Sha256()) },
+                    AllowedScopes = { "DeliveryAPI.read", "DeliveryAPI.write" }
+                },
                 // interactive client using code flow + pkce
                 new Client
                 {

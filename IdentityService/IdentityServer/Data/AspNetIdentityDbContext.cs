@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Data
 {
-    public class AspNetIdentityDbContext: IdentityDbContext
+    public class AspNetIdentityDbContext: IdentityDbContext<UserModel>
     {
         public AspNetIdentityDbContext(DbContextOptions<AspNetIdentityDbContext> options): base(options)
         {

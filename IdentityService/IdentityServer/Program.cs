@@ -1,5 +1,9 @@
+using AutoMapper;
 using IdentityServer;
 using IdentityServer.Data;
+using IdentityServer.Mapper;
+using IdentityServer.Services;
+using IdentityServer4.AspNetIdentity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,29 +25,54 @@ if (seed)
 }
 
 builder.Services.AddDbContext<AspNetIdentityDbContext>(options =>
-    options.UseSqlServer(defaultConnString, b => b.MigrationsAssembly(assembly)));
+    options.UseSqlServer(defaultConnString, b => b.MigrationsAssembly("IdentityServer")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+var mapperConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new AutoMapperProfile());
+});
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddTransient<IUserService, UserService>();
+
+builder.Services.AddIdentity<UserModel, IdentityRole>()
+    .AddUserManager<UserManager<UserModel>>()
+    .AddSignInManager<SignInManager<UserModel>>()
     .AddEntityFrameworkStores<AspNetIdentityDbContext>();
 
 builder.Services.AddIdentityServer()
-    .AddAspNetIdentity<IdentityUser>()
+    .AddAspNetIdentity<UserModel>()
     .AddConfigurationStore(options =>
     {
         options.ConfigureDbContext = b =>
-            b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
+            b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly("IdentityServer"));
     })
     .AddOperationalStore(options =>
     {
         options.ConfigureDbContext = b =>
-           b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly(assembly));
+           b.UseSqlServer(defaultConnString, opt => opt.MigrationsAssembly("IdentityServer"));
     })
-    .AddDeveloperSigningCredential();
+    .AddDeveloperSigningCredential()
+    .AddProfileService<ProfileService<UserModel>>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+
 app.UseIdentityServer();
+
+app.MapControllers();
 
 app.Run();
