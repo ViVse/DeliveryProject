@@ -36,15 +36,6 @@ services:
     ports:
       - "1433:1433"
 
-  userdb:
-    container_name: userdb
-    user: root
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=admin1234!
-    ports:
-      - "8033:1433"
-
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -70,6 +61,7 @@ services:
       - "CacheSettings:ConnectionString=cartdb:6379"
       - "GrpcSettings:DiscountUrl=http://discount.grpc"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - cartdb
       - rabbitmq
@@ -81,6 +73,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - discountdb
     ports:
@@ -91,6 +84,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - discountdb
     ports:
@@ -103,6 +97,7 @@ services:
       - "ConnectionStrings:mongoDb=mongodb://orderdb:27017"
       - MongoDbName=delivery
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - orderdb
       - rabbitmq
@@ -113,6 +108,7 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
       - "ConnectionStrings:DefaultConnection=Data Source=catalogdb,1433;Initial Catalog=DeliveryDb;User Id=SA; Password=admin1234!; TrustServerCertificate=True;"
     ports:
       - "8005:80"
@@ -122,28 +118,70 @@ services:
     depends_on:
       - catalogdb
 
+  user.api:
+    container_name: user.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=catalogdb,1433;Database=UserDb;User Id=SA;Password=admin1234!;TrustServerCertificate=True;"
+      - "JwtIssuer=http://localhost:8007"
+      - "JwyAudience=http://localhost:8010"
+      - "JwtSecurityKey=random key value for encodingjewfbjhb"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    ports:
+      - "8007:80"
+    depends_on:
+      - catalogdb
+
+  shopping.aggregator:
+    container_name: shopping.aggregator
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:UserApi=http://user.api"
+      - "ApiSettings:OrderApi=http://ordering.api"
+      - "ApiSettings:CatalogApi=http://catalog.api"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    ports:
+      - "8008:80"
+    depends_on:
+      - user.api
+      - ordering.api
+      - catalog.api
+
   ocelotapigw:
     container_name: ocelotapigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "JwtAuthority=http://localhost:8007"
+      - "JwyAudience=http://localhost:8010"
+      - "JwtSecurityKey=random key value for encodingjewfbjhb"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
     depends_on:
       - cart.api
       - discount.api
       - ordering.api
       - catalog.api
+      - user.api
+      - shopping.aggregator
     ports:
       - "8010:80"
 
-  user.api:
-    container_name: user.api
+  elasticsearch:
+    container_name: elasticsearch
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=userdb,1433;Database=UserDb;User Id=SA;Password=admin1234!;TrustServerCertificate=True;"
-      - "JwtIssuer=http://localhost:8011"
-      - "JwyAudience=http://localhost:8010"
-      - "JwtSecurityKey=random key value for encodingjewfbjhb"
+        - xpack.monitoring.enabled=true
+        - xpack.watcher.enabled=false
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
     ports:
-      - "8011:80"
-    depends_on:
-      - userdb
+        - "9200:9200"
+    volumes:
+        - elasticsearch-data:/usr/share/elasticsearch/data   
 
+  kibana:
+    container_name: kibana
+    environment:        
+        - ELASTICSEARCH_URL=http://elasticsearch:9200
+    depends_on:
+        - elasticsearch
+    ports:
+        - "5601:5601" 

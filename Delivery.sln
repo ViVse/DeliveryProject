@@ -65,7 +65,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "Identity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityService\IdentityServer\IdentityServer.csproj", "{A8127542-D74D-4C7B-A1F6-A7A0CCBF7EB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User.API", "IdentityService\User.API\User.API.csproj", "{9E4B7429-AE64-4686-AC92-19BB4930EDA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "User.API", "IdentityService\User.API\User.API.csproj", "{9E4B7429-AE64-4686-AC92-19BB4930EDA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Logging", "BuildingBlocks\Common.Logging\Common.Logging.csproj", "{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,6 +163,10 @@ Global
 		{9E4B7429-AE64-4686-AC92-19BB4930EDA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E4B7429-AE64-4686-AC92-19BB4930EDA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E4B7429-AE64-4686-AC92-19BB4930EDA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +200,7 @@ Global
 		{D787E497-13BA-486D-8FA4-1EC2EAD18419} = {859488B5-2A6B-4180-BC95-55DF77F6D29D}
 		{A8127542-D74D-4C7B-A1F6-A7A0CCBF7EB5} = {D787E497-13BA-486D-8FA4-1EC2EAD18419}
 		{9E4B7429-AE64-4686-AC92-19BB4930EDA9} = {D787E497-13BA-486D-8FA4-1EC2EAD18419}
+		{3B3CE6B2-0E5B-4250-94C3-292F95C3CFB5} = {E23979B2-148C-4826-B616-A8F89A7AB406}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2DEDD859-9D4D-452C-B8D5-9347C0C003BA}

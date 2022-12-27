@@ -1,7 +1,9 @@
 using AutoMapper;
+using Common.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using User.API.Configurations;
 using User.API.Data;
 using User.API.Factories;
@@ -9,6 +11,8 @@ using User.API.Interfaces;
 using User.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 builder.Services.AddDbContext<Context>(options => { 

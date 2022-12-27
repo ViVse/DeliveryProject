@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["IdentityService/User.API/User.API.csproj", "IdentityService/User.API/"]
+COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
 RUN dotnet restore "IdentityService/User.API/User.API.csproj"
 COPY . .
 WORKDIR "/src/IdentityService/User.API"
