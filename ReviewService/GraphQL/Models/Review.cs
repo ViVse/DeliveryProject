@@ -11,7 +11,7 @@ namespace GraphQL.Models
         public string Text { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         public int ShopId { get; set; }

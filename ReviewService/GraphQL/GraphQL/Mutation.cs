@@ -19,6 +19,7 @@ namespace GraphQL.GraphQL
         {
             var user = new User
             {
+                Id = input.UserId,
                 FirstName = input.FirstName,
                 LastName = input.LastName
             };
