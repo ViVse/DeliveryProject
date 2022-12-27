@@ -1,10 +1,14 @@
 using Cart.API.GrpcServices;
 using Cart.API.Repositories;
 using Cart.API.Repositories.Interfaces;
+using Common.Logging;
 using Discount.Grpc.Protos;
 using MassTransit;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 //Redis

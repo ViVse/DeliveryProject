@@ -2,14 +2,18 @@ using Application.Common.Interfaces;
 using Application.Common.Mappings;
 using Application.Orders.Commands.CreateOrder;
 using AutoMapper;
+using Common.Logging;
 using EventBus.Messages.Common;
 using Infrastructure.Persistence;
 using MassTransit;
 using MediatR;
 using Ordering.API.EventBusConsumer;
+using Serilog;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog(SeriLogger.Configure);
 
 // Add services to the container.
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());

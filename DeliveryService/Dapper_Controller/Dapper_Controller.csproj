@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\Dapper_BLL\Dapper_BLL.csproj" />
     <ProjectReference Include="..\Dapper_DAL\Dapper_DAL.csproj" />
   </ItemGroup>

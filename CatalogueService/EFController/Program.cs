@@ -2,6 +2,7 @@ using AutoMapper;
 using BLL.Configurations;
 using BLL.Interfaces.Services;
 using BLL.Services;
+using Common.Logging;
 using DAL;
 using DAL.Data;
 using DAL.Data.Repositories;
@@ -9,9 +10,11 @@ using DAL.Interfaces;
 using DAL.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.UseSerilog(SeriLogger.Configure);
 // Add services to the container.
 builder.Services.AddDbContext<Context>(options =>
 {

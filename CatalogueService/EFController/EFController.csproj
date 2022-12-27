@@ -22,6 +22,7 @@
 
   <ItemGroup>
 	<InternalsVisibleTo Include="Catalogue.IntegrationTest" />
+	<ProjectReference Include="..\..\BuildingBlocks\Common.Logging\Common.Logging.csproj" />
     <ProjectReference Include="..\BLL\BLL.csproj" />
   </ItemGroup>
 

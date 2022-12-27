@@ -7,7 +7,6 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["CatalogueService/EFController/EFController.csproj", "CatalogueService/EFController/"]
-COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
 COPY ["CatalogueService/BLL/BLL.csproj", "CatalogueService/BLL/"]
 COPY ["CatalogueService/DAL/DAL.csproj", "CatalogueService/DAL/"]
 RUN dotnet restore "CatalogueService/EFController/EFController.csproj"

@@ -1,9 +1,11 @@
 using AutoMapper;
+using Common.Logging;
 using Dapper_BLL.Configurations;
 using Dapper_BLL.Interfaces;
 using Dapper_BLL.Services;
 using Dapper_DAL.Interfaces;
 using Dapper_DAL.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 

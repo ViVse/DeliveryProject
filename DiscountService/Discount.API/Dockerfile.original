@@ -8,7 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["DiscountService/Discount.API/Discount.API.csproj", "DiscountService/Discount.API/"]
-COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "BuildingBlocks/Common.Logging/"]
 RUN dotnet restore "DiscountService/Discount.API/Discount.API.csproj"
 COPY . .
 WORKDIR "/src/DiscountService/Discount.API"

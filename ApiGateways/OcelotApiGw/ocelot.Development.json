@@ -252,6 +252,19 @@
       ],
       "UpstreamPathTemplate": "/signup",
       "UpstreamHttpMethod": [ "POST" ]
+    },
+    //Aggregator
+    {
+      "DownstreamPathTemplate": "/api/Shopping/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "shopping.aggregator",
+          "Port": "80"
+        }
+      ],
+      "UpstreamPathTemplate": "/Order/Complete/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
     }
     //Review API
     /*{
